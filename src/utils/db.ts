@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
-import config from "../../config/config";
 
 dotenv.config();
+
+const env = process.env.NODE_ENV || "development";
+const config = require(__dirname + "/../config/config.ts")[env];
 
 const { username, password, database, host } = config.development;
 
