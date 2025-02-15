@@ -1,6 +1,7 @@
 'use strict';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../src/utils/db.js';
+import Town from './town.js';
 
 interface HeadquarterAttributes {
   bankName: string;
@@ -25,5 +26,7 @@ Headquarter.init({
   sequelize,
   modelName: 'Headquarter',
 });
+
+Headquarter.belongsTo(Town, { foreignKey: 'townId', as: 'town' });
 
 export default Headquarter;

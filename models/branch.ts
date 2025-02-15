@@ -2,6 +2,8 @@
 
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../src/utils/db.js';
+import Town from './town.js';
+import Headquarter from './headquarter.js';
 
 interface BranchAttributes {
   swiftCode: string;
@@ -26,5 +28,8 @@ Branch.init({
   sequelize,
   modelName: 'Branch',
 });
+
+Branch.belongsTo(Town, { foreignKey: 'townId', as: 'town' });
+Branch.belongsTo(Headquarter, { foreignKey: 'headquarterId', as: 'headquarter' });
 
 export default Branch;

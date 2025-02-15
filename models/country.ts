@@ -2,6 +2,7 @@
 
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../src/utils/db.js';
+import Town from './town.js';
 
 interface CountryAttributes {
   name: string;
@@ -20,5 +21,7 @@ Country.init({
   sequelize,
   modelName: 'Country',
 });
+
+Country.hasMany(Town, {as: 'towns'})
 
 export default Country;

@@ -1,6 +1,7 @@
 'use strict';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../src/utils/db.js';
+import Town from './town.js';
 
 interface TimezoneAttributes {
   name: string;
@@ -19,5 +20,7 @@ Timezone.init({
   sequelize,
   modelName: 'Timezone',
 });
+
+Timezone.hasMany(Town, {as: 'towns'})
 
 export default Timezone;
