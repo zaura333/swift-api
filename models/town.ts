@@ -4,8 +4,7 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../src/utils/db.js";
 import Country from "./country.js";
 import Timezone from "./timezone.js";
-import Headquarter from "./headquarter.js";
-import Branch from "./branch.js";
+import Bank from "./bank.js";
 
 interface TownAttributes {
   id: number;
@@ -46,6 +45,7 @@ Town.init(
     name: {
       allowNull: false,
       type: DataTypes.STRING,
+      unique: "unique_town_country",
     },
     countryId: {
       allowNull: false,
@@ -54,6 +54,7 @@ Town.init(
         model: Country,
         key: "id",
       },
+      unique: "unique_town_country",
     },
     timezoneId: {
       allowNull: true,
@@ -72,7 +73,6 @@ Town.init(
 
 Town.belongsTo(Country, { foreignKey: "countryId", as: "country" });
 Town.belongsTo(Timezone, { foreignKey: "timezoneId", as: "timezone" });
-Timezone.hasMany(Headquarter, { as: "headquarters" });
-Timezone.hasMany(Branch, { as: "branches" });
+Timezone.hasMany(Bank, { as: "banks" });
 
 export default Town;

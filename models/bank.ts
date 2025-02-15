@@ -3,31 +3,31 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../src/utils/db.js";
 import Town from "./town.js";
-import Headquarter from "./headquarter.js";
 
-interface BranchAttributes {
+interface BankAttributes {
   id: number;
   createdAt: string;
   updatedAt: string;
   swiftCode: string;
   codeType: string;
+  bankName: string;
   address: string;
   townId: string;
-  headquarterId: string;
 }
 
-class Branch extends Model<BranchAttributes> implements BranchAttributes {
+class Bank extends Model<BankAttributes> implements BankAttributes {
   declare id: number;
   declare createdAt: string;
   declare updatedAt: string;
   declare swiftCode: string;
   declare codeType: string;
+  declare bankName: string;
   declare address: string;
   declare townId: string;
   declare headquarterId: string;
 }
 
-Branch.init(
+Bank.init(
   {
     id: {
       allowNull: false,
@@ -54,6 +54,10 @@ Branch.init(
       defaultValue: "BIC11",
       type: DataTypes.STRING,
     },
+    bankName: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
     address: {
       allowNull: true,
       type: DataTypes.STRING,
@@ -66,25 +70,13 @@ Branch.init(
         key: "id",
       },
     },
-    headquarterId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references: {
-        model: Headquarter,
-        key: "id",
-      },
-    },
   },
   {
     sequelize,
-    modelName: "Branch",
+    modelName: "Bank",
   }
 );
 
-Branch.belongsTo(Town, { foreignKey: "townId", as: "town" });
-Branch.belongsTo(Headquarter, {
-  foreignKey: "headquarterId",
-  as: "headquarter",
-});
+Bank.belongsTo(Town, { foreignKey: "townId", as: "town" });
 
-export default Branch;
+export default Bank;

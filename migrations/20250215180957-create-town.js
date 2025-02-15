@@ -41,6 +41,12 @@ module.exports = {
         defaultValue: Sequelize.literal("NOW()"),
       },
     });
+
+    await queryInterface.addConstraint("Towns", {
+      fields: ["name", "countryId"],
+      type: "unique",
+      name: "unique_town_country",
+    });
   },
   async down(queryInterface) {
     await queryInterface.dropTable("Towns");

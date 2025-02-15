@@ -3,16 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Headquarters", {
+    await queryInterface.createTable("Banks", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      bankName: {
-        type: Sequelize.STRING,
-        allowNull: false,
       },
       swiftCode: {
         type: Sequelize.STRING(11),
@@ -22,6 +18,10 @@ module.exports = {
       codeType: {
         type: Sequelize.STRING,
         defaultValue: "BIC11",
+      },
+      bankName: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       address: {
         type: Sequelize.STRING,
@@ -47,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable("Headquarters");
+    await queryInterface.dropTable("Banks");
   },
 };
