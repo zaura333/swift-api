@@ -6,6 +6,7 @@ import Town from './town.js';
 interface HeadquarterAttributes {
   bankName: string;
   swiftCode: string;
+  codeType: string;
   address: string;
   townId: string;
 }
@@ -13,15 +14,34 @@ interface HeadquarterAttributes {
 class Headquarter extends Model<HeadquarterAttributes> implements HeadquarterAttributes {
   declare bankName: string;
   declare swiftCode: string;
+  declare codeType: string;
   declare address: string;
   declare townId: string;
 }
 
 Headquarter.init({
-  bankName: DataTypes.STRING,
-  swiftCode: DataTypes.STRING,
+  bankName: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  swiftCode: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  codeType: {
+    defaultValue: "BIC11",
+    type: DataTypes.STRING
+  },
   address: DataTypes.STRING,
-  townId: DataTypes.INTEGER
+  townId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: Town,
+      key: 'id',
+    }
+  }
 }, {
   sequelize,
   modelName: 'Headquarter',

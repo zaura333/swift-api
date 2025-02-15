@@ -10,16 +10,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       bankName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       swiftCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
+      codeType: {
+        type: Sequelize.STRING,
+        defaultValue: "BIC11"
       },
       address: {
         type: Sequelize.STRING
       },
       townId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Towns',
+          key: 'id'
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
