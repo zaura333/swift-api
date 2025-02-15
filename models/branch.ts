@@ -47,7 +47,8 @@ Branch.init(
     },
     swiftCode: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(11),
+      unique: true,
     },
     codeType: {
       defaultValue: "BIC11",

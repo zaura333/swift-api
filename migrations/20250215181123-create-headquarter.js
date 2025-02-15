@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       swiftCode: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(11),
         unique: true,
         allowNull: false,
       },
