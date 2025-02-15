@@ -10,16 +10,32 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       swiftCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
+      codeType: {
+        type: Sequelize.STRING,
+        defaultValue: "BIC11"
       },
       address: {
         type: Sequelize.STRING
       },
       townId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Towns',
+          key: 'id'
+        },
+        allowNull: false,
       },
       headquarterId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Headquarters',
+          key: 'id'
+        },
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
