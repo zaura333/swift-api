@@ -1,8 +1,8 @@
-import cors from 'cors';
-import dotenv from 'dotenv';
-import express, { Express } from 'express';
-import routes from './routes/routes.js';
-import { connect } from './utils/db.js';
+import cors from "cors";
+import dotenv from "dotenv";
+import express, { Express } from "express";
+import routes from "./routes/routes.js";
+import { connect } from "./utils/db.js";
 
 dotenv.config();
 connect();

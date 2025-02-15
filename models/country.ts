@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../src/utils/db.js';
-import Town from './town.js';
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../src/utils/db.js";
+import Town from "./town.js";
 
 interface CountryAttributes {
   name: string;
@@ -14,22 +14,25 @@ class Country extends Model<CountryAttributes> implements CountryAttributes {
   declare iso2: string;
 }
 
-Country.init({
-  name: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
+Country.init(
+  {
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    iso2: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+    },
   },
-  iso2: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
+  {
+    sequelize,
+    modelName: "Country",
   }
-}, {
-  sequelize,
-  modelName: 'Country',
-});
+);
 
-Country.hasMany(Town, {as: 'towns'})
+Country.hasMany(Town, { as: "towns" });
 
 export default Country;
