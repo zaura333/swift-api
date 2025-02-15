@@ -15,8 +15,16 @@ class Country extends Model<CountryAttributes> implements CountryAttributes {
 }
 
 Country.init({
-  name: DataTypes.STRING,
-  iso2: DataTypes.STRING
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  iso2: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  }
 }, {
   sequelize,
   modelName: 'Country',

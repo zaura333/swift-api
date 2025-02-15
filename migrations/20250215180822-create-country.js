@@ -10,10 +10,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       iso2: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       createdAt: {
         allowNull: false,
