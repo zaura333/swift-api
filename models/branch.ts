@@ -6,6 +6,9 @@ import Town from "./town.js";
 import Headquarter from "./headquarter.js";
 
 interface BranchAttributes {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
   swiftCode: string;
   codeType: string;
   address: string;
@@ -14,6 +17,9 @@ interface BranchAttributes {
 }
 
 class Branch extends Model<BranchAttributes> implements BranchAttributes {
+  declare id: number;
+  declare createdAt: string;
+  declare updatedAt: string;
   declare swiftCode: string;
   declare codeType: string;
   declare address: string;
@@ -23,6 +29,22 @@ class Branch extends Model<BranchAttributes> implements BranchAttributes {
 
 Branch.init(
   {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW(),
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW(),
+    },
     swiftCode: {
       allowNull: false,
       type: DataTypes.STRING,

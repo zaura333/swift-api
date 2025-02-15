@@ -4,6 +4,9 @@ import { sequelize } from "../src/utils/db.js";
 import Town from "./town.js";
 
 interface HeadquarterAttributes {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
   bankName: string;
   swiftCode: string;
   codeType: string;
@@ -15,6 +18,9 @@ class Headquarter
   extends Model<HeadquarterAttributes>
   implements HeadquarterAttributes
 {
+  declare id: number;
+  declare createdAt: string;
+  declare updatedAt: string;
   declare bankName: string;
   declare swiftCode: string;
   declare codeType: string;
@@ -24,6 +30,22 @@ class Headquarter
 
 Headquarter.init(
   {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW(),
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW(),
+    },
     bankName: {
       allowNull: false,
       type: DataTypes.STRING,
