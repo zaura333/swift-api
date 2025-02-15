@@ -20,9 +20,26 @@ class Town extends Model<TownAttributes> implements TownAttributes {
 }
 
 Town.init({
-  name: DataTypes.STRING,
-  countryId: DataTypes.INTEGER,
-  timezoneId: DataTypes.INTEGER
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  countryId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: Country,
+      key: 'id',
+    }
+  },
+  timezoneId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: Timezone,
+      key: 'id',
+    }
+  }
 }, {
   sequelize,
   modelName: 'Town',

@@ -10,13 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       countryId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Countries',
+          key: 'id'
+        },
+        allowNull: false
       },
       timezoneId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Timezones',
+          key: 'id'
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
