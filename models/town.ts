@@ -56,7 +56,7 @@ Town.init(
       },
     },
     timezoneId: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER,
       references: {
         model: Timezone,
