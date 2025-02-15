@@ -1,19 +1,16 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
+import config from "../../config/config";
 
 dotenv.config();
 
 const {
-  DB_USER,
-  DB_PASSWORD,
-  DB_NAME,
-  DB_HOST,
-  PROD_DB_USER,
-  PROD_DB_PASSWORD,
-  PROD_DB_NAME,
-  PROD_DB_HOST,
-} = process.env;
+  username,
+  password,
+  database,
+  host,
+} = config.development;
 
 interface SequelizeOptions {
     host: string | undefined;
@@ -22,19 +19,11 @@ interface SequelizeOptions {
     database: string | undefined;
   }
 
-const settings: SequelizeOptions =
-  process.env.NODE_ENV === 'production'
-    ? {
-        database: PROD_DB_NAME,
-        username: PROD_DB_USER,
-        password: PROD_DB_PASSWORD,
-        host: PROD_DB_HOST,
-      }
-    : {
-        database: DB_NAME,
-        username: DB_USER,
-        password: DB_PASSWORD,
-        host: DB_HOST,
+const settings: SequelizeOptions = {
+        database: database,
+        username: username,
+        password: password,
+        host: host,
       };
 
 export const sequelize = new Sequelize(
