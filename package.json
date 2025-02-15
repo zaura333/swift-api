@@ -4,6 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"No test specified\"",
+    "build": "tsc",
     "prepare": "husky install",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
