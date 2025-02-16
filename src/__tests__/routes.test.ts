@@ -762,7 +762,7 @@ describe('GET endpoints', () => {
     expect(response.body).toEqual(mockResponse);
   });
 
-  it('should return 404 for non-existing swift code', async () => {
+  it('should return 404 when SWIFT code does not exist', async () => {
     (service.getCode as jest.Mock).mockRejectedValue(
       new Error('Swift code not found')
     );
@@ -780,6 +780,119 @@ describe('GET endpoints', () => {
     expect(response.body).toEqual({
       error:
         'Invalid code format. Please type 11-character SWIFT code or ISO2 country code.',
+    });
+  });
+});
+
+describe('POST endpoints', () => {
+  it('should return 400 for missing required fields', async () => {
+    (service.postCode as jest.Mock).mockResolvedValue(null);
+    const response = await request(app).post('/api/swift-codes').send({
+      address: 'TESTTOWN;TESTPROVINCE',
+      bankName: 'TEST',
+      countryName: 'POLAND',
+      isHeadquarter: true,
+      swiftCode: '12345678XXX',
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: 'Missing required fields.',
+    });
+  });
+
+  it('should return 400 for invalid country code', async () => {
+    (service.postCode as jest.Mock).mockRejectedValue(
+      new Error('Country not found')
+    );
+    const response = await request(app).post('/api/swift-codes').send({
+      address: 'TESTTOWN;TESTPROVINCE',
+      bankName: 'TEST',
+      countryISO2: 'Invalid',
+      countryName: 'POLAND',
+      isHeadquarter: true,
+      swiftCode: '12345678XXX',
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: 'Country not found',
+    });
+  });
+
+  it('should return 400 for invalid country code', async () => {
+    (service.postCode as jest.Mock).mockRejectedValue(
+      new Error('Invalid address format')
+    );
+    const response = await request(app).post('/api/swift-codes').send({
+      address: 'TESTTOWN, TESTPROVINCE',
+      bankName: 'TEST',
+      countryISO2: 'PL',
+      countryName: 'POLAND',
+      isHeadquarter: true,
+      swiftCode: '12345678XXX',
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: 'Invalid address format',
+    });
+  });
+
+  it('should return 400 for invalid country code', async () => {
+    (service.postCode as jest.Mock).mockRejectedValue(
+      new Error('Swift code already exists')
+    );
+    const response = await request(app).post('/api/swift-codes').send({
+      address: 'TESTTOWN; TESTPROVINCE',
+      bankName: 'TEST',
+      countryISO2: 'PL',
+      countryName: 'POLAND',
+      isHeadquarter: true,
+      swiftCode: 'TPEOPLPWAAS',
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: 'Swift code already exists',
+    });
+  });
+
+  it('should return 201 for successfully created SWIFT code', async () => {
+    (service.postCode as jest.Mock).mockResolvedValue({
+      message: 'Swift code added successfully.',
+    });
+    const response = await request(app).post('/api/swift-codes').send({
+      address: 'TESTTOWN; testprovince',
+      bankName: 'TEST',
+      countryISO2: 'pL',
+      countryName: 'poland',
+      isHeadquarter: false,
+      swiftCode: '12345678901',
+    });
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({
+      message: 'Swift code added successfully.',
+    });
+  });
+});
+
+describe('DELETE endpoints', () => {
+  it('should return 201 for successfully deleted SWIFT code', async () => {
+    (service.deleteCode as jest.Mock).mockResolvedValue({
+      message: 'Swift code deleted successfully.',
+    });
+    const response = await request(app).delete('/api/swift-codes/12345678901');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      message: 'Swift code deleted successfully.',
+    });
+  });
+
+  it('should return 404 for SWIFT code not found', async () => {
+    (service.deleteCode as jest.Mock).mockRejectedValue(
+      new Error('Swift code not found')
+    );
+    const response = await request(app).delete('/api/swift-codes/12345678901');
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Swift code not found',
     });
   });
 });
