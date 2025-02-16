@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Timezones", {
+    await queryInterface.createTable('Timezones', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,22 +15,22 @@ module.exports = {
         allowNull: false,
         unique: true,
         validate: {
-          is: ["^\w+\/\w+$"],
-        }
+          is: ['^\w+\/\w+$'],
+        },
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable("Timezones");
+    await queryInterface.dropTable('Timezones');
   },
 };

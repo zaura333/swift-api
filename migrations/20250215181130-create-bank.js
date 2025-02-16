@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Banks", {
+    await queryInterface.createTable('Banks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,31 +16,31 @@ module.exports = {
         allowNull: false,
         validate: {
           isUppercase: true,
-        }
+        },
       },
       codeType: {
         type: Sequelize.STRING,
-        defaultValue: "BIC11",
+        defaultValue: 'BIC11',
       },
       bankName: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           isUppercase: true,
-        }
+        },
       },
       address: {
         type: Sequelize.STRING,
         allowNull: true,
         validate: {
-          is: ["^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$"],
-        }
+          is: ['^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$'],
+        },
       },
       iso2: {
         type: Sequelize.STRING(2),
         references: {
-          model: "Countries",
-          key: "iso2",
+          model: 'Countries',
+          key: 'iso2',
         },
         allowNull: false,
         validate: {
@@ -50,24 +50,24 @@ module.exports = {
       townId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Towns",
-          key: "id",
+          model: 'Towns',
+          key: 'id',
         },
         allowNull: false,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable("Banks");
+    await queryInterface.dropTable('Banks');
   },
 };

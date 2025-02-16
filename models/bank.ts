@@ -1,9 +1,16 @@
-"use strict";
+'use strict';
 
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Optional } from "sequelize";
-import { sequelize } from "../src/utils/db";
-import Town from "./town";
-import Country from "./country";
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  Optional,
+} from 'sequelize';
+import { sequelize } from '../src/utils/db';
+import Town from './town';
+import Country from './country';
 
 class Bank extends Model<InferAttributes<Bank>, InferCreationAttributes<Bank>> {
   declare id: CreationOptional<number>;
@@ -41,10 +48,10 @@ Bank.init(
       unique: true,
       validate: {
         isUppercase: true,
-      }
+      },
     },
     codeType: {
-      defaultValue: "BIC11",
+      defaultValue: 'BIC11',
       type: DataTypes.STRING,
     },
     bankName: {
@@ -52,15 +59,15 @@ Bank.init(
       type: DataTypes.STRING,
       validate: {
         isUppercase: true,
-      }
+      },
     },
     address: {
       allowNull: true,
       type: DataTypes.STRING,
       validate: {
-        is: ["^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$"],
+        is: ['^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$'],
         isUppercase: true,
-      }
+      },
     },
     iso2: {
       allowNull: false,
@@ -70,7 +77,7 @@ Bank.init(
       },
       references: {
         model: Country,
-        key: "iso2",
+        key: 'iso2',
       },
     },
     townId: {
@@ -78,13 +85,13 @@ Bank.init(
       type: DataTypes.INTEGER,
       references: {
         model: Town,
-        key: "id",
+        key: 'id',
       },
     },
   },
   {
     sequelize,
-    modelName: "Bank",
+    modelName: 'Bank',
   }
 );
 

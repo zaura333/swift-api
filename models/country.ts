@@ -1,9 +1,18 @@
-"use strict";
+'use strict';
 
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
-import { sequelize } from "../src/utils/db";
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from 'sequelize';
+import { sequelize } from '../src/utils/db';
 
-class Country extends Model<InferAttributes<Country>, InferCreationAttributes<Country>> {
+class Country extends Model<
+  InferAttributes<Country>,
+  InferCreationAttributes<Country>
+> {
   declare id: CreationOptional<number>;
   declare createdAt: CreationOptional<string>;
   declare updatedAt: CreationOptional<string>;
@@ -43,12 +52,12 @@ Country.init(
       unique: true,
       validate: {
         isUppercase: true,
-      }
+      },
     },
   },
   {
     sequelize,
-    modelName: "Country",
+    modelName: 'Country',
   }
 );
 

@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import * as service from "../services/swiftService";
-import e from "cors";
+import { Request, Response } from 'express';
+import * as service from '../services/swiftService';
+import e from 'cors';
 
 export const routeSwiftOrIso2 = (req: Request, res: Response) => {
   const param = req.params.param.toUpperCase();
@@ -15,7 +15,7 @@ export const routeSwiftOrIso2 = (req: Request, res: Response) => {
     // Invalid input
     res.status(400).json({
       error:
-        "Invalid code format. Please type 11-character SWIFT code or ISO2 country code.",
+        'Invalid code format. Please type 11-character SWIFT code or ISO2 country code.',
     });
   }
 };
@@ -25,7 +25,7 @@ async function getCode(req: Request, res: Response) {
     const result = await service.getCode(req.params.param);
     res.status(200).send(result);
   } catch (error: any) {
-    res.status(404).json({error: error.message});
+    res.status(404).json({ error: error.message });
   }
 }
 
@@ -34,16 +34,21 @@ async function getCountryCodes(req: Request, res: Response) {
     const result = await service.getCountryCodes(req.params.param);
     res.status(200).send(result);
   } catch (error: any) {
-    res.status(404).json({error: error.message});
+    res.status(404).json({ error: error.message });
   }
 }
 
 export const postCode = async (req: Request, res: Response) => {
   const { address, bankName, countryISO2, swiftCode } = req.body;
 
-  if (!req.body.address || !req.body.bankName || !req.body.countryISO2 || !req.body.swiftCode) {
+  if (
+    !req.body.address ||
+    !req.body.bankName ||
+    !req.body.countryISO2 ||
+    !req.body.swiftCode
+  ) {
     res.status(400).json({
-      error: "Missing required fields.",
+      error: 'Missing required fields.',
     });
     return;
   }
@@ -55,8 +60,8 @@ export const postCode = async (req: Request, res: Response) => {
       countryISO2.toUpperCase(),
       swiftCode.toUpperCase()
     );
-    res.status(201).json({message: "Swift code added successfully."});
-  } catch (error:any) {
+    res.status(201).json({ message: 'Swift code added successfully.' });
+  } catch (error: any) {
     res.status(400).json({
       message: error.message,
     });
@@ -66,8 +71,8 @@ export const postCode = async (req: Request, res: Response) => {
 export const deleteCode = async (req: Request, res: Response) => {
   try {
     await service.deleteCode(req.params.code);
-    res.status(200).json({message: "Swift code deleted successfully."});
+    res.status(200).json({ message: 'Swift code deleted successfully.' });
   } catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(404).json({ message: error.message });
   }
 };

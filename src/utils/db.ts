@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import dotenv from "dotenv";
-import { Sequelize } from "sequelize";
+import dotenv from 'dotenv';
+import { Sequelize } from 'sequelize';
 
 dotenv.config();
 
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../../config/config");
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../../config/config');
 
 // const { username, password, database, host } = config.development;
 
@@ -29,9 +29,9 @@ export const sequelize = new Sequelize(
   settings.password!,
   {
     host: settings.host!,
-    dialect: "postgres",
+    dialect: 'postgres',
     dialectOptions: {
-      ssl: process.env.NODE_ENV === "production",
+      ssl: process.env.NODE_ENV === 'production',
     },
   }
 );
@@ -40,8 +40,8 @@ export async function connect() {
   try {
     sequelize.sync();
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    console.log('Connection has been established successfully.');
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error('Unable to connect to the database:', error);
   }
 }

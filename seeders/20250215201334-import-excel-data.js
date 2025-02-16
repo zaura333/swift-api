@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
-const XLSX = require("xlsx");
-const fs = require("fs");
-const path = require("path");
+const XLSX = require('xlsx');
+const fs = require('fs');
+const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface) => {
     const workbook = XLSX.readFile(
-      path.resolve(__dirname, "../data/swift-codes.xlsx")
+      path.resolve(__dirname, '../data/swift-codes.xlsx')
     );
     const rows = XLSX.utils.sheet_to_json(
       workbook.Sheets[workbook.SheetNames[0]]
@@ -17,13 +17,13 @@ module.exports = {
     for (const row of rows) {
       const transaction = await queryInterface.sequelize.transaction();
 
-      const iso2 = row["COUNTRY ISO2 CODE"].trim();
-      const timezone = row["TIME ZONE"].trim();
-      const townName = row["TOWN NAME"].trim();
-      const swiftCode = row["SWIFT CODE"].trim();
-      const bankName = row["NAME"].trim();
+      const iso2 = row['COUNTRY ISO2 CODE'].trim();
+      const timezone = row['TIME ZONE'].trim();
+      const townName = row['TOWN NAME'].trim();
+      const swiftCode = row['SWIFT CODE'].trim();
+      const bankName = row['NAME'].trim();
       const address = row.ADDRESS.trim();
-      const codeType = (row["CODE TYPE"] || "BIC11").trim();
+      const codeType = (row['CODE TYPE'] || 'BIC11').trim();
 
       try {
         // 1. Process time zone
@@ -48,7 +48,7 @@ module.exports = {
 
         if (!timezoneResult || timezoneResult.length === 0) {
           throw new Error(
-            `Failed to get/create timezone for ${row["TIME ZONE"]}`
+            `Failed to get/create timezone for ${row['TIME ZONE']}`
           );
         }
         const timezoneId = timezoneResult[0].id;
@@ -69,7 +69,7 @@ module.exports = {
 
         if (!countryResult || countryResult.length === 0) {
           throw new Error(
-            `Country with ISO2 ${row["COUNTRY ISO2 CODE"]} not found`
+            `Country with ISO2 ${row['COUNTRY ISO2 CODE']} not found`
           );
         }
         const countryId = countryResult[0].id;
@@ -98,12 +98,12 @@ module.exports = {
         );
 
         if (!townResult || townResult.length === 0) {
-          throw new Error(`Failed to create town ${row["TOWN NAME"]}`);
+          throw new Error(`Failed to create town ${row['TOWN NAME']}`);
         }
         const townId = townResult[0].id;
 
         // 4. Process SWIFT Code
-        const swiftCode = row["SWIFT CODE"];
+        const swiftCode = row['SWIFT CODE'];
         await queryInterface.sequelize.query(
           `
             INSERT INTO "Banks" 

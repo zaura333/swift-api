@@ -1,7 +1,7 @@
-import Bank from "../../models/bank";
-import Country from "../../models/country";
-import { Op } from "sequelize";
-import Town from "../../models/town";
+import Bank from '../../models/bank';
+import Country from '../../models/country';
+import { Op } from 'sequelize';
+import Town from '../../models/town';
 
 interface SwiftCodeResponse {
   address: string;
@@ -32,10 +32,10 @@ export const getCode = async (code: string) => {
     where: { swiftCode: code },
   });
   if (!bank) {
-    throw new Error("Swift code not found");
+    throw new Error('Swift code not found');
   }
 
-  const country = await Country.findOne({where: {iso2: bank.iso2}});
+  const country = await Country.findOne({ where: { iso2: bank.iso2 } });
 
   const result: SwiftCodeResponse = {
     address: bank.address,
@@ -47,7 +47,7 @@ export const getCode = async (code: string) => {
     swiftCode: bank.swiftCode,
   };
 
-  if (bank.swiftCode.endsWith("XXX")) {
+  if (bank.swiftCode.endsWith('XXX')) {
     result.isHeadquarter = true;
 
     const hqCode = bank.swiftCode.slice(0, 8);
@@ -65,10 +65,10 @@ export const getCode = async (code: string) => {
 };
 
 export const getCountryCodes = async (iso2: string) => {
-  const country = await Country.findOne({where: {iso2: iso2}});
+  const country = await Country.findOne({ where: { iso2: iso2 } });
 
   if (!country) {
-    throw new Error("Country not found");
+    throw new Error('Country not found');
   }
 
   const banks = await Bank.findAll({
@@ -84,7 +84,7 @@ export const getCountryCodes = async (iso2: string) => {
   };
 
   for (const bank of banks) {
-    const isHeadquarter = bank.swiftCode.endsWith("XXX") ? true : false;
+    const isHeadquarter = bank.swiftCode.endsWith('XXX') ? true : false;
 
     result.swiftCodes.push({
       address: bank.address,
@@ -98,20 +98,25 @@ export const getCountryCodes = async (iso2: string) => {
   return result;
 };
 
-export const postCode = async (address: string, bankName: string, countryISO2: string, swiftCode: string) => {
+export const postCode = async (
+  address: string,
+  bankName: string,
+  countryISO2: string,
+  swiftCode: string
+) => {
   const country = await Country.findOne({
     where: { iso2: countryISO2 },
   });
   if (!country) {
-    throw new Error("Country not found");
+    throw new Error('Country not found');
   }
 
   // Check if address is in the correct format
   if (!address.match(/^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$/)) {
-    throw new Error("Invalid address format");
+    throw new Error('Invalid address format');
   }
 
-  const addressParts = address.split(";");
+  const addressParts = address.split(';');
   let city = addressParts[0];
 
   if (addressParts.length === 2) {
@@ -127,16 +132,16 @@ export const postCode = async (address: string, bankName: string, countryISO2: s
   const bank = await Bank.findOrCreate({
     where: { swiftCode },
     defaults: {
-    address,
-    bankName,
-    iso2: countryISO2,
-    swiftCode,
-    townId: town[0].id,
-    }
+      address,
+      bankName,
+      iso2: countryISO2,
+      swiftCode,
+      townId: town[0].id,
+    },
   });
 
   if (!bank[1]) {
-    throw new Error("Swift code already exists");
+    throw new Error('Swift code already exists');
   }
 };
 
@@ -145,7 +150,7 @@ export const deleteCode = async (code: string) => {
     where: { swiftCode: code },
   });
   if (!bank) {
-    throw new Error("Swift code not found");
+    throw new Error('Swift code not found');
   }
 
   await bank.destroy();

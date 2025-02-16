@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Countries", {
+    await queryInterface.createTable('Countries', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,21 +24,21 @@ module.exports = {
         unique: true,
         validate: {
           isUppercase: true,
-        }
+        },
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
+        defaultValue: Sequelize.literal('NOW()'),
       },
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable("Countries");
+    await queryInterface.dropTable('Countries');
   },
 };
