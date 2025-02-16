@@ -32,7 +32,7 @@ export const getCode = async (code: string) => {
     where: { swiftCode: code },
   });
   if (!bank) {
-    throw new Error("Bank not found");
+    throw new Error("Swift code not found");
   }
 
   const country = await Country.findOne({where: {iso2: bank.iso2}});
@@ -145,7 +145,7 @@ export const deleteCode = async (code: string) => {
     where: { swiftCode: code },
   });
   if (!bank) {
-    throw new Error("Bank not found");
+    throw new Error("Swift code not found");
   }
 
   await bank.destroy();
