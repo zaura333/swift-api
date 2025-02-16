@@ -33,4 +33,14 @@ export function initializeAssociations() {
     as: "town",
     foreignKey: "townId",
   });
+
+  // Bank <-> Country associations
+  Bank.belongsTo(Country, {
+    as: "country",
+    foreignKey: "iso2",
+  });
+  Country.hasMany(Bank, {
+    as: "banks",
+    foreignKey: "iso2",
+  });
 }

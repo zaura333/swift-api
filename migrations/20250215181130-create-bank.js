@@ -26,6 +26,14 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
+      iso2: {
+        type: Sequelize.STRING(2),
+        references: {
+          model: "Countries",
+          key: "iso2",
+        },
+        allowNull: false,
+      },
       townId: {
         type: Sequelize.INTEGER,
         references: {

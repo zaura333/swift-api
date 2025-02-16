@@ -3,6 +3,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../src/utils/db.js";
 import Town from "./town.js";
+import Country from "./country.js";
 
 interface BankAttributes {
   id: number;
@@ -12,7 +13,8 @@ interface BankAttributes {
   codeType: string;
   bankName: string;
   address: string;
-  townId: string;
+  iso2: string;
+  townId: number;
 }
 
 class Bank extends Model<BankAttributes> implements BankAttributes {
@@ -23,8 +25,8 @@ class Bank extends Model<BankAttributes> implements BankAttributes {
   declare codeType: string;
   declare bankName: string;
   declare address: string;
-  declare townId: string;
-  declare headquarterId: string;
+  declare iso2: string;
+  declare townId: number;
 }
 
 Bank.init(
@@ -61,6 +63,14 @@ Bank.init(
     address: {
       allowNull: true,
       type: DataTypes.STRING,
+    },
+    iso2: {
+      allowNull: false,
+      type: DataTypes.STRING(2),
+      references: {
+        model: Country,
+        key: "iso2",
+      },
     },
     townId: {
       allowNull: false,

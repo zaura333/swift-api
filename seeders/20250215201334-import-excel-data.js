@@ -107,11 +107,12 @@ module.exports = {
         await queryInterface.sequelize.query(
           `
             INSERT INTO "Banks" 
-              ("swiftCode", "bankName", address, "townId", "codeType")
-            VALUES (:swiftCode, :bankName, :address, :townId, :codeType)
+              ("swiftCode", "bankName", address, iso2, "townId", "codeType")
+            VALUES (:swiftCode, :bankName, :address, :iso2, :townId, :codeType)
             ON CONFLICT ("swiftCode") DO UPDATE SET
               "bankName" = EXCLUDED."bankName",
               address = EXCLUDED.address,
+              "iso2" = EXCLUDED."iso2",
               "townId" = EXCLUDED."townId",
               "codeType" = EXCLUDED."codeType"
           `,
@@ -120,6 +121,7 @@ module.exports = {
               swiftCode,
               bankName,
               address: address || null,
+              iso2,
               townId,
               codeType,
             },
