@@ -13,6 +13,20 @@ interface SwiftCodeResponse {
   branches?: Bank[];
 }
 
+interface CountryCodeResponse {
+  countryISO2: string;
+  countryName: string;
+  swiftCodes: BankResponse[];
+}
+
+interface BankResponse {
+  address: string;
+  bankName: string;
+  countryISO2: string;
+  isHeadquarter: boolean;
+  swiftCode: string;
+}
+
 export const getCode = async (code: string) => {
   const bank = await Bank.findOne({
     where: { swiftCode: code },
@@ -63,16 +77,19 @@ export const getCountryCodes = async (iso2: string) => {
     },
   });
 
-  const result: SwiftCodeResponse[] = [];
+  const result: CountryCodeResponse = {
+    countryISO2: country.iso2,
+    countryName: country.name,
+    swiftCodes: [],
+  };
 
   for (const bank of banks) {
     const isHeadquarter = bank.swiftCode.endsWith("XXX") ? true : false;
 
-    result.push({
+    result.swiftCodes.push({
       address: bank.address,
       bankName: bank.bankName,
       countryISO2: country.iso2,
-      countryName: country.name,
       isHeadquarter,
       swiftCode: bank.swiftCode,
     });
