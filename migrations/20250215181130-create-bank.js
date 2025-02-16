@@ -16,6 +16,7 @@ module.exports = {
         allowNull: false,
         validate: {
           isUppercase: true,
+          is: ['^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3}|XXX)$'],
         },
       },
       codeType: {
