@@ -13,6 +13,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+          isUppercase: true,
+        },
       },
       countryId: {
         type: Sequelize.INTEGER,

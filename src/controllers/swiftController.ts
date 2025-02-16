@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, Request, Response } from "express";
-import * as service from "../services/swiftService.js";
+import * as service from "../services/swiftService";
 
 export const routeSwiftOrIso2 = (req: Request, res: Response) => {
   const param = req.params.param.toUpperCase();

@@ -14,6 +14,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          is: ["^\w+\/\w+$"],
+        }
       },
       createdAt: {
         allowNull: false,

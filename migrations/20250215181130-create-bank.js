@@ -14,6 +14,9 @@ module.exports = {
         type: Sequelize.STRING(11),
         unique: true,
         allowNull: false,
+        validate: {
+          isUppercase: true,
+        }
       },
       codeType: {
         type: Sequelize.STRING,
@@ -22,9 +25,16 @@ module.exports = {
       bankName: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+          isUppercase: true,
+        }
       },
       address: {
         type: Sequelize.STRING,
+        allowNull: true,
+        validate: {
+          is: ["^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$"],
+        }
       },
       iso2: {
         type: Sequelize.STRING(2),
@@ -33,6 +43,9 @@ module.exports = {
           key: "iso2",
         },
         allowNull: false,
+        validate: {
+          isUppercase: true,
+        },
       },
       townId: {
         type: Sequelize.INTEGER,

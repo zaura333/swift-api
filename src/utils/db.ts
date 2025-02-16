@@ -5,7 +5,7 @@ import { Sequelize } from "sequelize";
 dotenv.config();
 
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../../config/config.js");
+const config = require(__dirname + "/../../config/config");
 
 // const { username, password, database, host } = config.development;
 

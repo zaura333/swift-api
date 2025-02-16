@@ -14,11 +14,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isUppercase: true,
+        },
       },
       iso2: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(2),
         allowNull: false,
         unique: true,
+        validate: {
+          isUppercase: true,
+        }
       },
       createdAt: {
         allowNull: false,

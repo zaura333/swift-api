@@ -1,10 +1,9 @@
 "use strict";
 
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../src/utils/db.js";
-import Country from "./country.js";
-import Timezone from "./timezone.js";
-import Bank from "./bank.js";
+import { sequelize } from "../src/utils/db";
+import Country from "./country";
+import Timezone from "./timezone";
 
 interface TownAttributes {
   id: number;
@@ -46,6 +45,9 @@ Town.init(
       allowNull: false,
       type: DataTypes.STRING,
       unique: "unique_town_country",
+      validate: {
+        isUppercase: true,
+      }
     },
     countryId: {
       allowNull: false,

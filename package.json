@@ -5,6 +5,8 @@
   "scripts": {
     "test": "echo \"No test specified\"",
     "build": "tsc",
+    "start": "node dist/src/index.js",
+    "dev": "nodemon src/index.ts",
     "prepare": "husky install",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",

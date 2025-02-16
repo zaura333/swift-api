@@ -1,7 +1,6 @@
 "use strict";
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../src/utils/db.js";
-import Town from "./town.js";
+import { sequelize } from "../src/utils/db";
 
 interface TimezoneAttributes {
   id: number;
@@ -39,6 +38,9 @@ Timezone.init(
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        is: ["^\w+\/\w+$"],
+      }
     },
   },
   {

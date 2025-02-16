@@ -1,9 +1,9 @@
 "use strict";
 
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../src/utils/db.js";
-import Town from "./town.js";
-import Country from "./country.js";
+import { sequelize } from "../src/utils/db";
+import Town from "./town";
+import Country from "./country";
 
 interface BankAttributes {
   id: number;
@@ -51,6 +51,9 @@ Bank.init(
       allowNull: false,
       type: DataTypes.STRING(11),
       unique: true,
+      validate: {
+        isUppercase: true,
+      }
     },
     codeType: {
       defaultValue: "BIC11",
@@ -59,14 +62,24 @@ Bank.init(
     bankName: {
       allowNull: false,
       type: DataTypes.STRING,
+      validate: {
+        isUppercase: true,
+      }
     },
     address: {
       allowNull: true,
       type: DataTypes.STRING,
+      validate: {
+        is: ["^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$"],
+        isUppercase: true,
+      }
     },
     iso2: {
       allowNull: false,
       type: DataTypes.STRING(2),
+      validate: {
+        isUppercase: true,
+      },
       references: {
         model: Country,
         key: "iso2",

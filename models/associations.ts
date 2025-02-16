@@ -1,13 +1,13 @@
-import Country from "./country.js";
-import Town from "./town.js";
-import Timezone from "./timezone.js";
-import Bank from "./bank.js";
+import Country from "./country";
+import Town from "./town";
+import Timezone from "./timezone";
+import Bank from "./bank";
 
 export function initializeAssociations() {
   // Country <-> Town associations
   Country.hasMany(Town, {
     as: "towns",
-    foreignKey: "countryId", // Changed from "id" to "countryId"
+    foreignKey: "countryId",
   });
   Town.belongsTo(Country, {
     as: "country",

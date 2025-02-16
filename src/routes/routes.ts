@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import * as swiftController from "../controllers/swiftController.js";
+import * as swiftController from "../controllers/swiftController";
 
 const router = express.Router();
 
