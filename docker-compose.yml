@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=swift-db
+      - DB_HOST=db
+      - DB_PORT=5432
+      - NODE_ENV=development
+      - PORT=8080
+    volumes:
+      - .:/app
+      - /app/node_modules
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/health']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: swift-db
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U user -d swift-db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=swift-db
+      - DB_HOST=db
+      - DB_PORT=5432
+      - NODE_ENV=test
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run test
