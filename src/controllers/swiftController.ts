@@ -54,10 +54,10 @@ export const postCode = async (req: Request, res: Response) => {
       countryISO2.toUpperCase(),
       swiftCode.toUpperCase()
     );
-    res.status(201).send("Swift code added successfully.");
+    res.status(201).json({message: "Swift code added successfully."});
   } catch (error:any) {
     res.status(400).json({
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -65,8 +65,8 @@ export const postCode = async (req: Request, res: Response) => {
 export const deleteCode = async (req: Request, res: Response) => {
   try {
     const result = await service.deleteCode(req.params.code);
-    res.status(200).send("Swift code deleted successfully.");
+    res.status(200).json({message: "Swift code deleted successfully."});
   } catch (error) {
-    res.status(404).send("Swift code not found.");
+    res.status(404).json({message: "Swift code not found."});
   }
 };

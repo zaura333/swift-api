@@ -68,7 +68,6 @@ export const getCountryCodes = async (iso2: string) => {
   const country = await Country.findOne({where: {iso2: iso2}});
 
   if (!country) {
-    console.log('here');
     throw new Error("Country not found");
   }
 
@@ -125,13 +124,20 @@ export const postCode = async (address: string, bankName: string, countryISO2: s
     defaults: { name: city, countryId: country.id },
   });
 
-  const bank = await Bank.create({
+  const bank = await Bank.findOrCreate({
+    where: { swiftCode },
+    defaults: {
     address,
     bankName,
     iso2: countryISO2,
     swiftCode,
     townId: town[0].id,
+    }
   });
+
+  if (!bank[1]) {
+    throw new Error("Swift code already exists");
+  }
 };
 
 export const deleteCode = async (code: string) => {
