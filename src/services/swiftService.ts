@@ -32,7 +32,7 @@ export const getCode = async (code: string) => {
     where: { swiftCode: code },
   });
   if (!bank) {
-    return null;
+    throw new Error("Bank not found");
   }
 
   const country = await Country.findOne({where: {iso2: bank.iso2}});
@@ -65,11 +65,11 @@ export const getCode = async (code: string) => {
 };
 
 export const getCountryCodes = async (iso2: string) => {
-  const country = await Country.findOne({
-    where: { iso2 },
-  });
+  const country = await Country.findOne({where: {iso2: iso2}});
+
   if (!country) {
-    return null;
+    console.log('here');
+    throw new Error("Country not found");
   }
 
   const banks = await Bank.findAll({
@@ -132,4 +132,15 @@ export const postCode = async (address: string, bankName: string, countryISO2: s
     swiftCode,
     townId: town[0].id,
   });
+};
+
+export const deleteCode = async (code: string) => {
+  const bank = await Bank.findOne({
+    where: { swiftCode: code },
+  });
+  if (!bank) {
+    throw new Error("Bank not found");
+  }
+
+  await bank.destroy();
 };

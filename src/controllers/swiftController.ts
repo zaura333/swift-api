@@ -24,7 +24,7 @@ async function getCode(req: Request, res: Response) {
     const result = await service.getCode(req.params.param);
     res.status(200).send(result);
   } catch (error) {
-    res.status(404);
+    res.status(404).send("Swift code not found.");
   }
 }
 
@@ -33,7 +33,7 @@ async function getCountryCodes(req: Request, res: Response) {
     const result = await service.getCountryCodes(req.params.param);
     res.status(200).send(result);
   } catch (error) {
-    res.status(404);
+    res.status(404).send("Country code not found.");
   }
 }
 
@@ -59,5 +59,14 @@ export const postCode = async (req: Request, res: Response) => {
     res.status(400).json({
       error: error.message,
     });
+  }
+};
+
+export const deleteCode = async (req: Request, res: Response) => {
+  try {
+    const result = await service.deleteCode(req.params.code);
+    res.status(200).send("Swift code deleted successfully.");
+  } catch (error) {
+    res.status(404).send("Swift code not found.");
   }
 };
