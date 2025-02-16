@@ -122,7 +122,9 @@ export const postCode = async (
 
   // Check if address is in the correct format
   if (!address.match(/^(?:[^;]+;[^;]+(?:;[^;]+;[^;]+)?)$/)) {
-    throw new Error('Invalid address format');
+    throw new Error(
+      'Invalid address format. Please ensure one of the following formats: \"STREET;TOWN;PROVINCE;CODE\" or \"TOWN;PROVINCE\"'
+    );
   }
 
   const addressParts = address.split(';');
