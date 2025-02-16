@@ -5,9 +5,9 @@ import { Sequelize } from "sequelize";
 dotenv.config();
 
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.ts")[env];
+const config = require(__dirname + "/../../config/config.js");
 
-const { username, password, database, host } = config.development;
+// const { username, password, database, host } = config.development;
 
 interface SequelizeOptions {
   host: string | undefined;
@@ -17,10 +17,10 @@ interface SequelizeOptions {
 }
 
 const settings: SequelizeOptions = {
-  database: database,
-  username: username,
-  password: password,
-  host: host,
+  database: config.development.database,
+  username: config.development.username,
+  password: config.development.password,
+  host: config.development.host,
 };
 
 export const sequelize = new Sequelize(

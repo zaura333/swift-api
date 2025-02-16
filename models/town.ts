@@ -71,8 +71,4 @@ Town.init(
   }
 );
 
-Town.belongsTo(Country, { foreignKey: "countryId", as: "country" });
-Town.belongsTo(Timezone, { foreignKey: "timezoneId", as: "timezone" });
-Timezone.hasMany(Bank, { as: "banks" });
-
 export default Town;

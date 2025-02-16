@@ -47,6 +47,4 @@ Timezone.init(
   }
 );
 
-Timezone.hasMany(Town, { as: "towns" });
-
 export default Timezone;

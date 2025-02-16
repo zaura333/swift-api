@@ -77,6 +77,4 @@ Bank.init(
   }
 );
 
-Bank.belongsTo(Town, { foreignKey: "townId", as: "town" });
-
 export default Bank;

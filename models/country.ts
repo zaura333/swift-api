@@ -55,6 +55,4 @@ Country.init(
   }
 );
 
-Country.hasMany(Town, { as: "towns" });
-
 export default Country;
