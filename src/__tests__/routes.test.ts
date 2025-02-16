@@ -209,7 +209,7 @@ describe('GET endpoints', () => {
     (service.getCountryCodes as jest.Mock).mockResolvedValue(mockResponse);
     (service.getCode as jest.Mock).mockResolvedValue(mockResponse);
 
-    const response = await request(app).get('/api/swift-codes/AL');
+    const response = await request(app).get('/api/v1/swift-codes/AL');
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockResponse);
   });
@@ -218,7 +218,7 @@ describe('GET endpoints', () => {
     (service.getCountryCodes as jest.Mock).mockRejectedValue(
       new Error('Country not found')
     );
-    const response = await request(app).get('/api/swift-codes/XX');
+    const response = await request(app).get('/api/v1/swift-codes/XX');
 
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: 'Country not found' });
@@ -234,7 +234,7 @@ describe('GET endpoints', () => {
       swiftCode: 'TPEOPLPWP45',
     };
     (service.getCode as jest.Mock).mockResolvedValue(mockResponse);
-    const response = await request(app).get('/api/swift-codes/TPEOPLPWP45');
+    const response = await request(app).get('/api/v1/swift-codes/TPEOPLPWP45');
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockResponse);
   });
@@ -757,7 +757,7 @@ describe('GET endpoints', () => {
       ],
     };
     (service.getCode as jest.Mock).mockResolvedValue(mockResponse);
-    const response = await request(app).get('/api/swift-codes/TPEOPLPWXXX');
+    const response = await request(app).get('/api/v1/swift-codes/TPEOPLPWXXX');
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockResponse);
   });
@@ -767,7 +767,7 @@ describe('GET endpoints', () => {
       new Error('Swift code not found')
     );
 
-    const response = await request(app).get('/api/swift-codes/12345678901');
+    const response = await request(app).get('/api/v1/swift-codes/12345678901');
 
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: 'Swift code not found' });
@@ -775,7 +775,7 @@ describe('GET endpoints', () => {
 
   it('should return 400 for invalid code format (not 2 or 11 char length)', async () => {
     (service.getCode as jest.Mock).mockResolvedValue(null);
-    const response = await request(app).get('/api/swift-codes/INVALID');
+    const response = await request(app).get('/api/v1/swift-codes/INVALID');
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
       error:
@@ -787,7 +787,7 @@ describe('GET endpoints', () => {
 describe('POST endpoints', () => {
   it('should return 400 for missing required fields', async () => {
     (service.postCode as jest.Mock).mockResolvedValue(null);
-    const response = await request(app).post('/api/swift-codes').send({
+    const response = await request(app).post('/api/v1/swift-codes').send({
       address: 'TESTTOWN;TESTPROVINCE',
       bankName: 'TEST',
       countryName: 'POLAND',
@@ -804,7 +804,7 @@ describe('POST endpoints', () => {
     (service.postCode as jest.Mock).mockRejectedValue(
       new Error('Country not found')
     );
-    const response = await request(app).post('/api/swift-codes').send({
+    const response = await request(app).post('/api/v1/swift-codes').send({
       address: 'TESTTOWN;TESTPROVINCE',
       bankName: 'TEST',
       countryISO2: 'Invalid',
@@ -822,7 +822,7 @@ describe('POST endpoints', () => {
     (service.postCode as jest.Mock).mockRejectedValue(
       new Error('Invalid address format')
     );
-    const response = await request(app).post('/api/swift-codes').send({
+    const response = await request(app).post('/api/v1/swift-codes').send({
       address: 'TESTTOWN, TESTPROVINCE',
       bankName: 'TEST',
       countryISO2: 'PL',
@@ -840,7 +840,7 @@ describe('POST endpoints', () => {
     (service.postCode as jest.Mock).mockRejectedValue(
       new Error('Swift code already exists')
     );
-    const response = await request(app).post('/api/swift-codes').send({
+    const response = await request(app).post('/api/v1/swift-codes').send({
       address: 'TESTTOWN; TESTPROVINCE',
       bankName: 'TEST',
       countryISO2: 'PL',
@@ -858,7 +858,7 @@ describe('POST endpoints', () => {
     (service.postCode as jest.Mock).mockResolvedValue({
       message: 'Swift code added successfully.',
     });
-    const response = await request(app).post('/api/swift-codes').send({
+    const response = await request(app).post('/api/v1/swift-codes').send({
       address: 'TESTTOWN; testprovince',
       bankName: 'TEST',
       countryISO2: 'pL',
@@ -878,7 +878,9 @@ describe('DELETE endpoints', () => {
     (service.deleteCode as jest.Mock).mockResolvedValue({
       message: 'Swift code deleted successfully.',
     });
-    const response = await request(app).delete('/api/swift-codes/12345678901');
+    const response = await request(app).delete(
+      '/api/v1/swift-codes/12345678901'
+    );
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
       message: 'Swift code deleted successfully.',
@@ -889,7 +891,9 @@ describe('DELETE endpoints', () => {
     (service.deleteCode as jest.Mock).mockRejectedValue(
       new Error('Swift code not found')
     );
-    const response = await request(app).delete('/api/swift-codes/12345678901');
+    const response = await request(app).delete(
+      '/api/v1/swift-codes/12345678901'
+    );
     expect(response.status).toBe(404);
     expect(response.body).toEqual({
       message: 'Swift code not found',
