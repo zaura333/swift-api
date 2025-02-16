@@ -1,18 +1,11 @@
 "use strict";
-import { DataTypes, Model } from "sequelize";
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../src/utils/db";
 
-interface TimezoneAttributes {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-}
-
-class Timezone extends Model<TimezoneAttributes> implements TimezoneAttributes {
-  declare id: number;
-  declare createdAt: string;
-  declare updatedAt: string;
+class Timezone extends Model<InferAttributes<Timezone>, InferCreationAttributes<Timezone>> {
+  declare id: CreationOptional<number>;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
   declare name: string;
 }
 

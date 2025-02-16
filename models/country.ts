@@ -1,20 +1,12 @@
 "use strict";
 
-import { DataTypes, Model } from "sequelize";
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../src/utils/db";
 
-interface CountryAttributes {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  iso2: string;
-}
-
-class Country extends Model<CountryAttributes> implements CountryAttributes {
-  declare id: number;
-  declare createdAt: string;
-  declare updatedAt: string;
+class Country extends Model<InferAttributes<Country>, InferCreationAttributes<Country>> {
+  declare id: CreationOptional<number>;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
   declare name: string;
   declare iso2: string;
 }

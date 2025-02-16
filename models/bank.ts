@@ -1,28 +1,16 @@
 "use strict";
 
-import { DataTypes, Model } from "sequelize";
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Optional } from "sequelize";
 import { sequelize } from "../src/utils/db";
 import Town from "./town";
 import Country from "./country";
 
-interface BankAttributes {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  swiftCode: string;
-  codeType: string;
-  bankName: string;
-  address: string;
-  iso2: string;
-  townId: number;
-}
-
-class Bank extends Model<BankAttributes> implements BankAttributes {
-  declare id: number;
-  declare createdAt: string;
-  declare updatedAt: string;
+class Bank extends Model<InferAttributes<Bank>, InferCreationAttributes<Bank>> {
+  declare id: CreationOptional<number>;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
   declare swiftCode: string;
-  declare codeType: string;
+  declare codeType: CreationOptional<string>;
   declare bankName: string;
   declare address: string;
   declare iso2: string;
