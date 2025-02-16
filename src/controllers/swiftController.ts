@@ -1,9 +1,36 @@
 import { ErrorRequestHandler, Request, Response } from "express";
 import * as service from "../services/swiftService.js";
 
-export async function getCode(req: Request, res: Response) {
+export const routeSwiftOrIso2 = (req: Request, res: Response) => {
+  const param = req.params.param.toUpperCase();
+
+  if (param.length === 2) {
+    // Handle as ISO2 country code
+    getCountryCodes(req, res);
+  } else if (param.length === 11) {
+    // Handle as SWIFT code
+    getCode(req, res);
+  } else {
+    // Invalid input
+    res.status(400).json({
+      error:
+        "Invalid code format. Please type 11-character SWIFT code or ISO2 country code.",
+    });
+  }
+};
+
+async function getCode(req: Request, res: Response) {
   try {
-    const result = await service.getCode(req.params.code);
+    const result = await service.getCode(req.params.param);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(404);
+  }
+}
+
+async function getCountryCodes(req: Request, res: Response) {
+  try {
+    const result = await service.getCountryCodes(req.params.param);
     res.status(200).send(result);
   } catch (error) {
     res.status(404);

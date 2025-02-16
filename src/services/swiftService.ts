@@ -21,9 +21,7 @@ export const getCode = async (code: string) => {
     return null;
   }
 
-  const town = await Town.findByPk(bank.townId);
-  // Town cannot be null due to db constaints
-  const country = await Country.findByPk(town!.countryId);
+  const country = await Country.findByPk(bank.iso2);
 
   const result: SwiftCodeResponse = {
     address: bank.address,
@@ -45,6 +43,38 @@ export const getCode = async (code: string) => {
           [Op.iLike]: `${hqCode}%`,
         },
       },
+    });
+  }
+
+  return result;
+};
+
+export const getCountryCodes = async (iso2: string) => {
+  const country = await Country.findOne({
+    where: { iso2 },
+  });
+  if (!country) {
+    return null;
+  }
+
+  const banks = await Bank.findAll({
+    where: {
+      iso2,
+    },
+  });
+
+  const result: SwiftCodeResponse[] = [];
+
+  for (const bank of banks) {
+    const isHeadquarter = bank.swiftCode.endsWith("XXX") ? true : false;
+
+    result.push({
+      address: bank.address,
+      bankName: bank.bankName,
+      countryISO2: country.iso2,
+      countryName: country.name,
+      isHeadquarter,
+      swiftCode: bank.swiftCode,
     });
   }
 
