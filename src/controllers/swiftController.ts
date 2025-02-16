@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import * as service from '../services/swiftService';
-import e from 'cors';
 
 export const routeSwiftOrIso2 = (req: Request, res: Response) => {
   const param = req.params.param.toUpperCase();
@@ -23,7 +22,7 @@ export const routeSwiftOrIso2 = (req: Request, res: Response) => {
 async function getCode(req: Request, res: Response) {
   try {
     const result = await service.getCode(req.params.param);
-    res.status(200).send(result);
+    res.status(200).json(result);
   } catch (error: any) {
     res.status(404).json({ error: error.message });
   }
@@ -54,7 +53,7 @@ export const postCode = async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await service.postCode(
+    await service.postCode(
       address.toUpperCase(),
       bankName.toUpperCase(),
       countryISO2.toUpperCase(),

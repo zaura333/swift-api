@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"No test specified\"",
+    "start": "ts-node src/index.ts",
     "build": "tsc",
-    "start": "node dist/src/index.js",
+    "test": "jest",
+    "test:ci": "jest --ci",
     "dev": "nodemon src/index.ts",
     "restart-db": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "seed-db": "npx sequelize-cli db:seed:all",
@@ -42,6 +43,7 @@
     "prettier": "^3.5.1",
     "sequelize-cli": "^6.6.2",
     "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.24.0"
