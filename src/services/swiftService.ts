@@ -102,8 +102,17 @@ export const postCode = async (
   address: string,
   bankName: string,
   countryISO2: string,
-  swiftCode: string
+  swiftCode: string,
+  isHeadquarter: boolean
 ) => {
+  if (isHeadquarter && !swiftCode.endsWith('XXX')) {
+    throw new Error('Headquarter code must end with XXX.');
+  }
+
+  if (!isHeadquarter && swiftCode.endsWith('XXX')) {
+    throw new Error('Branch code cannot end with XXX.');
+  }
+
   const country = await Country.findOne({
     where: { iso2: countryISO2 },
   });

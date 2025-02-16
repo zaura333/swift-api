@@ -38,7 +38,7 @@ async function getCountryCodes(req: Request, res: Response) {
 }
 
 export const postCode = async (req: Request, res: Response) => {
-  const { address, bankName, countryISO2, swiftCode } = req.body;
+  const { address, bankName, countryISO2, swiftCode, isHeadquarter } = req.body;
 
   if (
     !req.body.address ||
@@ -57,7 +57,8 @@ export const postCode = async (req: Request, res: Response) => {
       address.toUpperCase(),
       bankName.toUpperCase(),
       countryISO2.toUpperCase(),
-      swiftCode.toUpperCase()
+      swiftCode.toUpperCase(),
+      isHeadquarter
     );
     res.status(201).json({ message: 'Swift code added successfully.' });
   } catch (error: any) {
