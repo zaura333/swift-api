@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Request, Response } from "express";
+import { Request, Response } from "express";
 import * as service from "../services/swiftService";
 
 export const routeSwiftOrIso2 = (req: Request, res: Response) => {
@@ -36,3 +36,28 @@ async function getCountryCodes(req: Request, res: Response) {
     res.status(404);
   }
 }
+
+export const postCode = async (req: Request, res: Response) => {
+  const { address, bankName, countryISO2, swiftCode } = req.body;
+
+  if (!req.body.address || !req.body.bankName || !req.body.countryISO2 || !req.body.swiftCode) {
+    res.status(400).json({
+      error: "Missing required fields.",
+    });
+    return;
+  }
+
+  try {
+    const result = await service.postCode(
+      address.toUpperCase(),
+      bankName.toUpperCase(),
+      countryISO2.toUpperCase(),
+      swiftCode.toUpperCase()
+    );
+    res.status(201).send("Swift code added successfully.");
+  } catch (error:any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};
