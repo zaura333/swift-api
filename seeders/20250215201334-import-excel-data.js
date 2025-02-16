@@ -17,6 +17,14 @@ module.exports = {
     for (const row of rows) {
       const transaction = await queryInterface.sequelize.transaction();
 
+      const iso2 = row["COUNTRY ISO2 CODE"].trim();
+      const timezone = row["TIME ZONE"].trim();
+      const townName = row["TOWN NAME"].trim();
+      const swiftCode = row["SWIFT CODE"].trim();
+      const bankName = row["NAME"].trim();
+      const address = row.ADDRESS.trim();
+      const codeType = (row["CODE TYPE"] || "BIC11").trim();
+
       try {
         // 1. Process time zone
         const timezoneResult = await queryInterface.sequelize.query(
@@ -32,7 +40,7 @@ module.exports = {
           SELECT id FROM "Timezones" WHERE name = :timezone
         `,
           {
-            replacements: { timezone: row["TIME ZONE"] },
+            replacements: { timezone },
             transaction,
             type: queryInterface.sequelize.QueryTypes.SELECT,
           }
@@ -53,7 +61,7 @@ module.exports = {
           LIMIT 1
         `,
           {
-            replacements: { iso2: row["COUNTRY ISO2 CODE"] },
+            replacements: { iso2 },
             transaction,
             type: queryInterface.sequelize.QueryTypes.SELECT,
           }
@@ -80,9 +88,9 @@ module.exports = {
         `,
           {
             replacements: {
-              townName: row["TOWN NAME"],
-              countryId: countryId,
-              timezoneId: timezoneId,
+              townName,
+              countryId,
+              timezoneId,
             },
             transaction,
             type: queryInterface.sequelize.QueryTypes.SELECT,
@@ -110,10 +118,10 @@ module.exports = {
           {
             replacements: {
               swiftCode,
-              bankName: row["NAME"],
-              address: row.ADDRESS,
+              bankName,
+              address: address || null,
               townId,
-              codeType: row["CODE TYPE"] || "BIC11",
+              codeType,
             },
             transaction,
           }
