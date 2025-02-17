@@ -48,7 +48,7 @@ Follow these steps to set up and run the Swift API project:
 
 4. **Set Up Environment Variables**: Create a `.env` file in the root directory of the project and configure the necessary environment variables as required by the project. Refer to any existing `.env.example` file or the project's documentation for specific variables needed.
 
-5. **Run the Application Using Docker Compose**: Start the application along with database and tests using Docker Compose:
+5. **Run the Application Using Docker Compose**: Start the application along with database and tests using Docker Compose. Migrations and seeders will be run upon the server start:
 
    ```bash
    docker-compose up
