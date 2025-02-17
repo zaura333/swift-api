@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 8080
 
 # Run the application
-CMD ["sh", "-c", "npm run setup-db && npm run start"]
+CMD ["sh", "-c", "npm run build && npm run setup-db && npm run start"]
