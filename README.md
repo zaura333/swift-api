@@ -116,7 +116,7 @@ Here is specification of the available endpoints:
 
 - for headquarter - if SWIFT code ends as 'XXX':
 
-```json
+```
 {
     "address": string,
     "bankName": string,
@@ -146,7 +146,7 @@ Here is specification of the available endpoints:
 
 - for a branch:
 
-```json
+```
 {
     "address": string,
     "bankName": string,
@@ -157,13 +157,13 @@ Here is specification of the available endpoints:
 }
 ```
 
-### **GET /v1/swift-codes/country/:countryISO2code**
+### **GET /v1/swift-codes/:countryISO2code**
 
 **Description**: Fetch all SWIFT codes with details for a specific country (both headquarters and branches).
 
 **Response**:
 
-```json
+```
 {
     "countryISO2": string,
     "countryName": string,
@@ -200,7 +200,7 @@ The app treats the param as SWIFT code or ISO2 code based on the params length.
 
 **Request Body**:
 
-```json
+```
 {
     "address": string (in format "STREET;TOWN;PROVINCE;CODE" or "TOWN;PROVINCE"),
     "bankName": string,
@@ -218,7 +218,7 @@ Although the database enforces validation to ensure records are stored in upperc
 
 **Response**:
 
-```json
+```
 {
     "message": string,
 }
@@ -231,7 +231,7 @@ Although the database enforces validation to ensure records are stored in upperc
 
 **Response**:
 
-```json
+```
 {
   "message": string,
 }
@@ -266,3 +266,6 @@ While the project currently has a solid set of **unit tests**, there is room for
   ```
 
 - **Git Hooks**: Husky is used to manage Git hooks, ensuring code quality checks are run before commits and pushes.
+
+## CHANGES
+- Feb 17th - Fixed issue with container failing after restart due to seeders running twice. Added script serving as entrypoint for Docker that runs database setup only on the first run by checking if flag folder has been created.
