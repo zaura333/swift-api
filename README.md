@@ -1,6 +1,6 @@
 # SWIFT Code API
 
-SWIFT Code API and database implementation.
+**Technical task for Remitly - Summer Internship 2025**
 
 ## Tech Stack
 
