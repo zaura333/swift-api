@@ -223,7 +223,7 @@ Although the database enforces validation to ensure records are stored in upperc
 
 ```json
 {
-  "message": "Resource deleted successfully."
+  "message": string,
 }
 ```
 
