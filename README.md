@@ -157,7 +157,7 @@ Here is specification of the available endpoints:
 }
 ```
 
-### **GET /v1/swift-codes/country/:countryISO2code**
+### **GET /v1/swift-codes/:countryISO2code**
 
 **Description**: Fetch all SWIFT codes with details for a specific country (both headquarters and branches).
 
